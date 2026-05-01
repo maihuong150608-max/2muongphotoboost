@@ -23,6 +23,7 @@
 <body>
     <div id="root"></div>
 
+    <!-- {% raw %} -->
     <script type="text/babel">
         const { useState, useRef, useEffect } = React;
 
@@ -78,7 +79,7 @@
                 { id: 'check-black', name: 'Caro Đen', style: { background: '#FFFFFF', backgroundImage: 'conic-gradient(#000 0.25turn, #FFF 0.25turn 0.5turn, #000 0.5turn 0.75turn, #FFF 0.75turn)', backgroundSize: '30px 30px' } }
             ];
 
-            const stickerAssets = ['🎀', '🐱', '🧸', '✨', '🍓', '🍰', '🐰', '💕', '🍒', '🦋', '🦢', '🕯️', '🎊','💌', '❤️‍🔥', '💗', '🇻🇳', '🍉', '🥨', '🎂', '🧋', '🍵', '🏸', '🌸', '🌟', '🌷'];
+            const stickerAssets = ['🎀', '🐱', '🧸', '✨', '🍓', '🍰', '🐰', '💕', '🍒', '🦋', '🦢', '🕯️'];
             const shapes = { rect: 'rounded-none', rounded: 'rounded-[1rem]', circle: 'rounded-full aspect-square', heart: 'clip-path-heart' };
             const fonts = ['Pacifico', 'Dancing Script', 'Playfair Display', 'Montserrat'];
 
@@ -108,7 +109,6 @@
                     const video = videoRef.current;
                     const canvas = canvasRef.current;
                     if (video && canvas) {
-                        // Tính toán kích thước capture để không bị cắt (center crop)
                         const size = Math.min(video.videoWidth, video.videoHeight);
                         canvas.width = size;
                         canvas.height = size;
@@ -116,13 +116,11 @@
                         const ctx = canvas.getContext('2d');
                         ctx.save();
                         
-                        // Lật ảnh nếu đang ở chế độ mirror
                         if (isMirrored) {
                             ctx.translate(canvas.width, 0);
                             ctx.scale(-1, 1);
                         }
 
-                        // Vẽ vùng trung tâm của video vào canvas vuông
                         const startX = (video.videoWidth - size) / 2;
                         const startY = (video.videoHeight - size) / 2;
                         
@@ -145,7 +143,6 @@
             const downloadImage = async () => {
                 if (isSaving) return;
                 setIsSaving(true);
-                // Đợi render hoàn tất
                 await new Promise(r => setTimeout(r, 100));
                 
                 try {
@@ -233,7 +230,6 @@
                         </button>
                     </div>
 
-                    {/* PHOTO AREA */}
                     <div ref={editorRef} style={frames[activeFrame].style} 
                         className={`relative shadow-2xl flex flex-col items-center transition-all duration-300 overflow-hidden
                         ${layoutType === 'filmstrip' ? 'w-[240px] p-4 pt-6 pb-12' : 
@@ -274,7 +270,6 @@
                         ))}
                     </div>
 
-                    {/* CONTROLS */}
                     <div className="mt-12 w-full max-w-md bg-white p-8 rounded-[3rem] space-y-8 shadow-xl border border-pink-50 mb-20">
                         <div className="space-y-4">
                             <h3 className="text-[10px] font-black uppercase text-[#D44D5C] tracking-widest flex items-center gap-2"><Icon name="sticker" size={14}/> Stickers</h3>
@@ -309,5 +304,6 @@
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<App />);
     </script>
+    <!-- {% endraw %} -->
 </body>
 </html>
